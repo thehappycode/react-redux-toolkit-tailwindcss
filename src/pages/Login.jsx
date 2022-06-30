@@ -30,15 +30,15 @@ const Login = () => {
           <form className="space-y-6" onSubmit={handleSubmit}>
             <h5 className="text-xl font-medium text-gray-900 uppercase text-center">Sign in to cbbank sso</h5>
             <div>
-              <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900">Username</label>
-              <input type="text" name="email" id="email" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="Username to HRM" required="" value={userName} onChange={(e) => { setUserName(e.target.value) }} />
+              <label htmlFor="email" className="block mb-2 font-medium text-gray-900">Username</label>
+              <input type="text" name="email" id="email" className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="Username to HRM" required="" value={userName} onChange={(e) => { setUserName(e.target.value) }} />
             </div>
             <div>
-              <label htmlFor="password" className="block mb-2 text-sm font-medium text-gray-900">Password</label>
-              <input type="password" name="password" id="password" placeholder="••••••••" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required="" value={password} onChange={(e) => { setPassword(e.target.value) }} />
+              <label htmlFor="password" className="block mb-2 font-medium text-gray-900">Password</label>
+              <input type="password" name="password" id="password" placeholder="••••••••" className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required="" value={password} onChange={(e) => { setPassword(e.target.value) }} />
             </div>
-            <button type="submit" className={`w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center disabled ${userName && password ? '' : 'opacity-50 cursor-not-allowed'}`}>Login to your account</button>
-            <div className="text-sm font-medium text-gray-500">
+            <button type="submit" className={`w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg px-5 py-2.5 text-center disabled ${userName && password ? '' : 'opacity-50 cursor-not-allowed'}`}>Login to your account</button>
+            <div className="font-medium text-gray-500">
               Nếu bạn chưa có tài khoản vui lòng liên hệ <b> Phòng Quản Lý Nhân Sự &amp; Đào Tạo</b>.
             </div>
           </form>

@@ -57,8 +57,8 @@ const Search = ({
                     <div className="py-4 px-2">
                         {/* Recent searches */}
                         <div className="mb-3 last:mb-0">
-                            <div className="text-xs font-semibold text-slate-400 uppercase px-2 mb-2">Recent searches</div>
-                            <ul className="text-sm">
+                            <div className="font-semibold text-slate-400 uppercase px-2 mb-2">Recent searches</div>
+                            <ul className="">
                                 <li>
                                     <Link
                                         className="flex items-center p-2 text-slate-800 hover:text-white hover:bg-indigo-500 rounded group"
@@ -135,8 +135,8 @@ const Search = ({
                         </div>
                         {/* Recent pages */}
                         <div className="mb-3 last:mb-0">
-                            <div className="text-xs font-semibold text-slate-400 uppercase px-2 mb-2">Recent pages</div>
-                            <ul className="text-sm">
+                            <div className="font-semibold text-slate-400 uppercase px-2 mb-2">Recent pages</div>
+                            <ul className="">
                                 <li>
                                     <Link
                                         className="flex items-center p-2 text-slate-800 hover:text-white hover:bg-indigo-500 rounded group"

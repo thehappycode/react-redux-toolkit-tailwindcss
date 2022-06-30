@@ -1,61 +1,137 @@
-import { useState } from 'react'
-import Notification from '../components/Notification';
-import Search from '../components/Search';
-import UserProfile from '../components/UserProfile';
+import { useEffect } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
+import { AiOutlineMenu } from 'react-icons/ai'
+import { FiShoppingCart } from 'react-icons/fi'
+import { BsChatLeft } from 'react-icons/bs'
+import { RiNotification3Line } from 'react-icons/ri'
+import { MdKeyboardArrowDown, MdOutlineCancel } from 'react-icons/md'
+// import { Cart, Chat, Notification, UserProfile } from '.'
+// import { useStateContext } from '../contexts/ContextProvider'
+import { setIsOpenSidebar, setScreenSize, handleAutoCloseSidebar, selectLayout } from '../redux/features/layout/layoutSlice'
+import avatar from '../assets/images/avatar.jpeg'
+import Breadcrumb from '../components/Breadcrumb'
+import { Link } from 'react-router-dom'
+import { SiShopware } from 'react-icons/si'
 
-const Header = ({ isOpenSidebar, setIsOpenSidebar }) => {
-  const [isOpenSearch, setIsOpenSearch] = useState(false)
+const Header = () => {
+  const { isOpenSidebar, screenSize, themeColor } = useSelector(selectLayout)
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    const handleScreenResize = () => dispatch(setScreenSize(window.innerWidth))
+    window.addEventListener('resize', handleScreenResize)
+    handleScreenResize()
+    return () => window.removeEventListener('resize', handleScreenResize)
+  }, [])
+
+  useEffect(() => {
+    if (screenSize <= 900) {
+      dispatch(setIsOpenSidebar(false))
+    }
+    else {
+      dispatch(setIsOpenSidebar(true))
+    }
+  }, [screenSize])
+
+  const NavButton = ({ title, customFunc, icon, style, dotColor }) => (
+    <button type='button'
+      title={title}
+      onClick={customFunc}
+      style={style && style }
+      className='relative rounded-full p-4 hover:bg-light-gray hover:text-green-sea'
+    >
+      {/* <span style={{ background: dotColor }}
+        className='absolute inline-flex rounded-full h-2 w-2 right-2 top-2'
+      /> */}
+      {icon}
+    </button>
+  )
   return (
-    <header className="sticky top-0 bg-white border-b border-slate-200 z-30">
-      <div className="px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16 -mb-px">
-
-          {/* Header: Left side */}
-          <div className="flex">
-
-            {/* Hamburger button */}
-            <button
-              className="text-slate-500 hover:text-slate-600 lg:hidden"
-              aria-controls="sidebar"
-              aria-expanded={isOpenSidebar}
-              onClick={() => setIsOpenSidebar(!isOpenSidebar)}
+    <div className='flex justify-between w-full'>
+      {/* Left Header */}
+      <div className='flex justify-between p-2 relative w-72 text-base'>
+        {/* <div className='flex w-full'> */}
+        <div className='flex'>
+          {isOpenSidebar ?
+            <Link to='/' onClick={() => dispatch(handleAutoCloseSidebar())}
+              className='flex items-center gap-3 p-2 text-xl font-extrabold tracking-tight'
             >
-              <span className="sr-only">Open sidebar</span>
-              <svg className="w-6 h-6 fill-current" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <rect x="4" y="5" width="16" height="2" />
-                <rect x="4" y="11" width="16" height="2" />
-                <rect x="4" y="17" width="16" height="2" />
-              </svg>
-            </button>
-
+              <SiShopware />
+              <span>sso.cbbank.vn</span>
+            </Link>
+            :
+            <NavButton
+              title='Open Sidebar'
+              style={{ fontSize: '1rem', lineHeight: '1.5rem' }}
+              customFunc={() => dispatch(setIsOpenSidebar(!isOpenSidebar))} color={themeColor}
+              icon={<MdOutlineCancel />}
+            />
+          }
+        </div>
+        <div className='flex'>
+          {isOpenSidebar &&
+            <NavButton
+              title='Close Sidebar'
+              customFunc={() => dispatch(setIsOpenSidebar(!isOpenSidebar))} color={themeColor}
+              icon={<AiOutlineMenu />}
+            />
+          }
+          {/* <Breadcrumb /> */}
+        </div>
+        {/* </div> */}
+      </div>
+      {/* Right Header */}
+      <div className='flex justify-between p-2 md:mx-4 relative w-full'>
+        <div className='flex'>
+          {/* <NavButton
+              title='Menu'
+              customFunc={() => dispatch(setIsOpenSidebar(!isOpenSidebar))} color={themeColor}
+              icon={<AiOutlineMenu />}
+            />
+            <Breadcrumb /> */}
+        </div>
+        <div className='flex'>
+          <NavButton
+            title='Cart'
+            customFunc={() => { alert('cart') }}
+            color={themeColor}
+            icon={<FiShoppingCart />}
+          />
+          <NavButton
+            title='Chat'
+            dotColor='#03c9d7'
+            customFunc={() => { alert('chat') }}
+            color={themeColor}
+            icon={<BsChatLeft />}
+          />
+          <NavButton
+            title='Notification'
+            dotColor='#03c9d7'
+            customFunc={() => { alert('notification') }}
+            color={themeColor}
+            icon={<RiNotification3Line />}
+          />
+          <div className='flex items-center gap-2 cursor-pointer p-1 hover:bg-light-gray rounded-lg'
+            onClick={() => { alert('user profile') }}
+          >
+            <img
+              className='rounded-full w-8 h-8'
+              src={avatar}
+              alt="avatar"
+            />
+            <p>
+              <span className='text-gray-400 text-14'>Hi, </span>{' '}
+              <span className='text-gray-400 font-bold ml-1 text-14'>Tâm</span>
+            </p>
+            <MdKeyboardArrowDown className='text-gray-400 text-14' />
           </div>
-
-          {/* Header: Right side */}
-          <div className="flex items-center">
-
-            <button
-              className={`w-8 h-8 flex items-center justify-center bg-slate-100 hover:bg-slate-200 transition duration-150 rounded-full ml-3 ${isOpenSearch && 'bg-slate-200'}`}
-              onClick={(e) => { e.stopPropagation(); setIsOpenSearch(true); }}
-              aria-controls="search-modal"
-            >
-              <span className="sr-only">Search</span>
-              <svg className="w-4 h-4" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
-                <path className="fill-current text-slate-500" d="M7 14c-3.86 0-7-3.14-7-7s3.14-7 7-7 7 3.14 7 7-3.14 7-7 7zM7 2C4.243 2 2 4.243 2 7s2.243 5 5 5 5-2.243 5-5-2.243-5-5-5z" />
-                <path className="fill-current text-slate-400" d="M15.707 14.293L13.314 11.9a8.019 8.019 0 01-1.414 1.414l2.393 2.393a.997.997 0 001.414 0 .999.999 0 000-1.414z" />
-              </svg>
-            </button>
-            <Search id="search-modal" searchId="search" isOpenModal={isOpenSearch} setIsOpendModal={setIsOpenSidebar} />
-            <Notification />
-            {/* <Help /> */}
-            {/*  Divider */}
-            <hr className="w-px h-6 bg-slate-200 mx-3" />
-            <UserProfile />
-
-          </div>
-
+          {/* {isClicked.chat && <Chat />}
+        {isClicked.cart && <Cart />}
+        {isClicked.notification && <Notification />}
+        {isClicked.userProfile && <UserProfile />} */}
         </div>
       </div>
-    </header>
+    </div>
   )
 }
 

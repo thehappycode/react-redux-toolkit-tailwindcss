@@ -10,14 +10,16 @@ module.exports = {
       fontSize: {
         14: '14px',
       },
-      color: {
+      colors: {
         'primary': '#007bff',
         'secondary': '#6c757d',
         'success': '#28a745',
         'danger': '#dc3545',
         'warning': '#ffc107',
         'info': '#17a2b8',
-        'dark': '#343a40'
+        'dark': '#343a40',
+        'alternate': '#794c8a',
+        'green-sea': '#03c9d7'
       },
       backgroundColor: {
         'main-bg': '#FAFBFB',
@@ -32,6 +34,7 @@ module.exports = {
         'warning': '#ffc107',
         'info': '#17a2b8',
         'dark': '#343a40',
+        'alternate': '#794c8a',
         'green-sea': '#03c9d7'
       },
       borderWidth: {

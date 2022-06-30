@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react"
 import { RiInboxArchiveFill, RiInboxUnarchiveFill, RiDiscussFill } from 'react-icons/ri'
-import Card from "../components/card"
+import Card from "../components/Card"
 import { DoughnutChart, LineChart } from "../components/charts"
-import Jobs from "../components/jobs"
+import { Jobs } from "../components/tables"
 import { dataDoughnutChart, dataAriaChart, rgba, colorChart } from "../utils/data"
 
 const Dashboard = () => {
@@ -20,7 +20,7 @@ const Dashboard = () => {
       <div>Loading...</div>
     )
   return (
-    <div className="container mx-auto">
+    <div className="w-full mx-auto">
       {/* card system */}
       <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-4 mb-6">
         <div className="flex flex-row justify-center items-center bg-white rounded-lg p-6">
@@ -136,27 +136,20 @@ const Dashboard = () => {
             </tbody>
           </table>
           <div className="px-5 py-5 bg-white border-t flex flex-col xs:flex-row items-center xs:justify-between">
-            {/* <span className="text-xs xs:text-sm text-gray-900">
-              Showing 1 to 4 of 50 Entries
-            </span>
-            <div className="inline-flex mt-2 xs:mt-0">
-              <button
-                className="text-sm text-indigo-50 transition duration-150 hover:bg-indigo-500 bg-indigo-600 font-semibold py-2 px-4 rounded-l">
-                Prev
-              </button>
-              &nbsp; &nbsp;
-              <button
-                className="text-sm text-indigo-50 transition duration-150 hover:bg-indigo-500 bg-indigo-600 font-semibold py-2 px-4 rounded-r">
-                Next
-              </button>
-            </div> */}
+
           </div>
         </div>
       </div>
       {/* table grid */}
-     <Jobs />
-     {/* card */}
-     <Card />
+      <Jobs />
+      {/* card */}
+      <Card
+        header='Header'
+        body='body'
+        footer={<div>
+          <button type="button" className="bg-primary" onClick={() => { alert('btn') }}>btn</button>
+        </div>}
+      />
     </div>
   )
 }

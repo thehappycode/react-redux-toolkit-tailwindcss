@@ -1,6 +1,6 @@
 const Inbox = () => {
   return (
-    <div>Inbox</div>
+    <div className=" bg-red-200 w-full h-full">Inbox</div>
   )
 }
 

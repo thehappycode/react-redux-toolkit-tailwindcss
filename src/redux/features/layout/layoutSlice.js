@@ -2,7 +2,9 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
     isOpenSidebar: true,
-    screenSize: undefined
+    screenSize: undefined,
+    themeMode: 'dark',
+    themeColor: '#03c9d7'   
 }
 
 export  const layoutSlice = createSlice({
@@ -11,17 +13,22 @@ export  const layoutSlice = createSlice({
 
     // reducers
     reducers: {
-        handleClickSidebar: (state, action) => {
-            state.isOpenSidebar = action.payload.isOpenSidebar
+        setIsOpenSidebar: (state, action) => {
+            state.isOpenSidebar = action.payload
         },
-        handleResize: (state, action) => {
-            state.screenSize = action.payload.screenSize
+        setScreenSize: (state, action) => {
+            state.screenSize = action.payload
+        },
+        handleAutoCloseSidebar: (state) => {
+            if (state.isOpenSidebar && state.screenSize <= 900) {
+                state.isOpenSidebar = false
+            }
         }
     }
 })
 
 // action
-export const {handleClickSidebar, handleResize} = layoutSlice.actions
+export const {setIsOpenSidebar, setScreenSize, handleAutoCloseSidebar} = layoutSlice.actions
 
 // select
 export const selectLayout = (state) => state.layoutReducer

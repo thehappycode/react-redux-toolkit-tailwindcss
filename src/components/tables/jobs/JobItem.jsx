@@ -1,14 +1,13 @@
 import { Link } from 'react-router-dom'
 import { BsFlag } from 'react-icons/bs'
 
-const JobItem = ({job}) => {
-    console.log(job);
+const JobItem = ({ job }) => {
     return (
         <tr>
             <td className="px-4 py-4 border-b border border-collapse border-gray-200 bg-white text-xl w-5%">
                 <BsFlag />
             </td>
-            <td className="px-4 py-4 border-b border border-collapse border-gray-200 bg-white text-sm w-35% align-top">
+            <td className="px-4 py-4 border-b border border-collapse border-gray-200 bg-white w-35% align-top">
                 <Link to={'/'}>
                     <div>
                         <span>
@@ -43,7 +42,7 @@ const JobItem = ({job}) => {
                     </span>
                 </div>
             </td>
-            <td className="px-4 py-4 border-b border border-collapse border-gray-200 bg-white text-sm w-30% align-top">
+            <td className="px-4 py-4 border-b border border-collapse border-gray-200 bg-white w-30% align-top">
                 <div>
                     <b>CV QLNSĐT khởi tạo hồ sơ</b>
                 </div>

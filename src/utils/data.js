@@ -13,7 +13,14 @@ import { GrLocation } from 'react-icons/gr';
 export const colorChart = {
   inbox: [27, 185, 52],
   discuss: [30, 183, 255],
-  sendbox: [38, 43, 64]
+  sendbox: [38, 43, 64],
+  cc: [255, 193, 7],
+  success: [27, 185, 52],
+  primary: [30, 183, 255],
+  secondary: [38, 43, 64],
+  warning: [255, 193, 7],
+  danger:[220, 53, 69],
+  alternate:[121, 76, 138]
 }
 
 export const rgba = (r, g, b, a) => {
@@ -45,17 +52,88 @@ export const dataDoughnutChart = {
 }
 
 export const dataAriaChart = {
-  labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
+  labels: ["ECM", "BOS", "LOS", "BMS", "TMS"],
   datasets: [
     {
-      //label: "First dataset",
-      data: [33, 53, 85, 41, 44, 65],
+      data: [3, 2, 5, 3, 4],
       fill: true,
+      lineTension: .3,
       backgroundColor: rgba(...colorChart.inbox, .2),
       borderColor: rgba(...colorChart.inbox),
     }
   ]
+}
+
+export const dataInboxAriaChart = {
+  labels: ["ECM", "BOS", "LOS", "BMS", "TMS"],
+  datasets: [
+    {
+      data: [3, 2, 5, 3, 4],
+      fill: true,
+      lineTension: .3,
+      backgroundColor: rgba(...colorChart.inbox, .2),
+      borderColor: rgba(...colorChart.inbox),
+    }
+  ]
+}
+
+export const dataCCAriaChart = {
+  labels: ["ECM", "BOS", "LOS", "BMS", "TMS"],
+  datasets: [
+    {
+      data: [1, 5, 4, 2, 4],
+      fill: true,
+      lineTension: .3,
+      backgroundColor: rgba(...colorChart.cc, .2),
+      borderColor: rgba(...colorChart.cc),
+    }
+  ]
+}
+
+export const dataDiscussAriaChart = {
+  labels: ["ECM", "BOS", "LOS", "BMS", "TMS"],
+  datasets: [
+    {
+      data: [5, 7, 3, 2, 6],
+      fill: true,
+      lineTension: .3,
+      backgroundColor: rgba(...colorChart.discuss, .2),
+      borderColor: rgba(...colorChart.discuss),
+    }
+  ]
+}
+
+export const dataVerticalBarChart = {
+  labels: ["ECM", "BOS", "LOS", "BMS", "TMS"],
+  datasets: [
+    {
+      label: 'HS đến',
+      data: [3, 2, 5, 3, 4],
+      fill: true,
+      lineTension: .3,
+      backgroundColor: rgba(...colorChart.inbox),
+      borderColor: rgba(...colorChart.inbox),
+    },
+    {
+      label: 'HS CC',
+      data: [1, 5, 4, 2, 4],
+      fill: true,
+      lineTension: .3,
+      backgroundColor: rgba(...colorChart.cc),
+      borderColor: rgba(...colorChart.cc),
+    },
+    {
+      label: 'HS Thảo luận',
+      data: [5, 7, 3, 2, 6],
+      fill: true,
+      lineTension: .3,
+      backgroundColor: rgba(...colorChart.discuss),
+      borderColor: rgba(...colorChart.discuss),
+    },
+  ]
 };
+
+
 
 export const jobs = [
   {
@@ -395,86 +473,224 @@ export const links = [
     title: 'Dashboard',
     links: [
       {
-        name: 'ecommerce',
+        name: 'Dashboard',
+        to: '',
         icon: <FiShoppingBag />,
       },
     ],
   },
-
   {
-    title: 'Pages',
+    title: 'ECM',
     links: [
       {
-        name: 'orders',
+        name: 'Hồ sơ đến',
+        to: 'inbox',
         icon: <AiOutlineShoppingCart />,
       },
       {
-        name: 'employees',
+        name: 'Hồ sơ thảo luận',
+        to: 'discuss',
         icon: <IoMdContacts />,
       },
       {
-        name: 'customers',
+        name: 'Hồ sơ đã xử lý',
+        to: 'sendbox',
         icon: <RiContactsLine />,
       },
     ],
   },
   {
-    title: 'Apps',
+    title: 'BOS',
     links: [
       {
-        name: 'calendar',
-        icon: <AiOutlineCalendar />,
+        name: 'Hồ sơ đến',
+        to: 'inbox',
+        icon: <AiOutlineShoppingCart />,
       },
       {
-        name: 'kanban',
-        icon: <BsKanban />,
+        name: 'Hồ sơ thảo luận',
+        to: 'discuss',
+        icon: <IoMdContacts />,
       },
       {
-        name: 'editor',
-        icon: <FiEdit />,
-      },
-      {
-        name: 'color-picker',
-        icon: <BiColorFill />,
+        name: 'Hồ sơ đã xử lý',
+        to: 'sendbox',
+        icon: <RiContactsLine />,
       },
     ],
   },
   {
-    title: 'Charts',
+    title: 'LOS',
     links: [
       {
-        name: 'line',
-        icon: <AiOutlineStock />,
+        name: 'Hồ sơ đến',
+        to: 'inbox',
+        icon: <AiOutlineShoppingCart />,
       },
       {
-        name: 'area',
-        icon: <AiOutlineAreaChart />,
-      },
-
-      {
-        name: 'bar',
-        icon: <AiOutlineBarChart />,
+        name: 'Hồ sơ thảo luận',
+        to: 'discuss',
+        icon: <IoMdContacts />,
       },
       {
-        name: 'pie',
-        icon: <FiPieChart />,
-      },
-      {
-        name: 'financial',
-        icon: <RiStockLine />,
-      },
-      {
-        name: 'color-mapping',
-        icon: <BsBarChart />,
-      },
-      {
-        name: 'pyramid',
-        icon: <GiLouvrePyramid />,
-      },
-      {
-        name: 'stacked',
-        icon: <AiOutlineBarChart />,
+        name: 'Hồ sơ đã xử lý',
+        to: 'sendbox',
+        icon: <RiContactsLine />,
       },
     ],
   },
+  {
+    title: 'TMS',
+    links: [
+      {
+        name: 'Hồ sơ đến',
+        to: 'inbox',
+        icon: <AiOutlineShoppingCart />,
+      },
+      {
+        name: 'Hồ sơ thảo luận',
+        to: 'discuss',
+        icon: <IoMdContacts />,
+      },
+      {
+        name: 'Hồ sơ đã xử lý',
+        to: 'sendbox',
+        icon: <RiContactsLine />,
+      },
+    ],
+  },
+  {
+    title: 'BMS',
+    links: [
+      {
+        name: 'Hồ sơ đến',
+        to: 'inbox',
+        icon: <AiOutlineShoppingCart />,
+      },
+      {
+        name: 'Hồ sơ thảo luận',
+        to: 'discuss',
+        icon: <IoMdContacts />,
+      },
+      {
+        name: 'Hồ sơ đã xử lý',
+        to: 'sendbox',
+        icon: <RiContactsLine />,
+      },
+    ],
+  },
+  
+];
+export const newLinks = [
+  {
+    title: 'Dashboard',
+    links: [
+      {
+        name: 'Dashboard',
+        to: '',
+        icon: <FiShoppingBag />,
+      },
+    ],
+  },
+  {
+    title: 'Danh sách công việc',
+    links: [
+      {
+        name: 'Hồ sơ đến',
+        to: 'inbox',
+        icon: <AiOutlineShoppingCart />,
+      },
+      {
+        name: 'Hồ sơ thảo luận',
+        to: 'discuss',
+        icon: <IoMdContacts />,
+      },
+      {
+        name: 'Hồ sơ đã xử lý',
+        to: 'sendbox',
+        icon: <RiContactsLine />,
+      },
+    ],
+  },
+  {
+    title: 'BOS',
+    links: [
+      {
+        name: 'Hồ sơ đến',
+        to: 'inbox',
+        icon: <AiOutlineShoppingCart />,
+      },
+      {
+        name: 'Hồ sơ thảo luận',
+        to: 'discuss',
+        icon: <IoMdContacts />,
+      },
+      {
+        name: 'Hồ sơ đã xử lý',
+        to: 'sendbox',
+        icon: <RiContactsLine />,
+      },
+    ],
+  },
+  {
+    title: 'LOS',
+    links: [
+      {
+        name: 'Hồ sơ đến',
+        to: 'inbox',
+        icon: <AiOutlineShoppingCart />,
+      },
+      {
+        name: 'Hồ sơ thảo luận',
+        to: 'discuss',
+        icon: <IoMdContacts />,
+      },
+      {
+        name: 'Hồ sơ đã xử lý',
+        to: 'sendbox',
+        icon: <RiContactsLine />,
+      },
+    ],
+  },
+  {
+    title: 'TMS',
+    links: [
+      {
+        name: 'Hồ sơ đến',
+        to: 'inbox',
+        icon: <AiOutlineShoppingCart />,
+      },
+      {
+        name: 'Hồ sơ thảo luận',
+        to: 'discuss',
+        icon: <IoMdContacts />,
+      },
+      {
+        name: 'Hồ sơ đã xử lý',
+        to: 'sendbox',
+        icon: <RiContactsLine />,
+      },
+    ],
+  },
+  {
+    title: 'BMS',
+    links: [
+      {
+        name: 'Hồ sơ đến',
+        to: 'inbox',
+        icon: <AiOutlineShoppingCart />,
+      },
+      {
+        name: 'Hồ sơ thảo luận',
+        to: 'discuss',
+        icon: <IoMdContacts />,
+      },
+      {
+        name: 'Hồ sơ đã xử lý',
+        to: 'sendbox',
+        icon: <RiContactsLine />,
+      },
+    ],
+  },
+  
 ];
