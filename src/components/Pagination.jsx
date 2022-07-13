@@ -1,12 +1,12 @@
 const Pagination = (props) => {
-    const { totalPage, activePage, setActivePage } = props
+    const { totalPage, pageNumber, setPageNumber } = props
     const arr = [...Array(totalPage + 1).keys()].slice(1);
     return (
         <nav aria-label="Page navigation">
             <ul className="inline-flex items-center -space-x-px">
-                {activePage > 1 && <li className="cursor-pointer">
+                {pageNumber > 1 && <li className="cursor-pointer">
                     <div
-                        onClick={() => setActivePage(activePage - 1)}
+                        onClick={() => setPageNumber(pageNumber - 1)}
                         className="block py-2 px-3 ml-0 leading-tight text-gray-500 bg-white hover:bg-light-gray"
                     >
                         <span className="sr-only">Previous</span>
@@ -15,15 +15,15 @@ const Pagination = (props) => {
                 </li>}
                 {arr.map(p => (
                     <li key={p} className="cursor-pointer">
-                        <div onClick={() => setActivePage(p)}
-                            className={`leading-tight ${p !== activePage ? 'py-2 px-3 text-gray-500 bg-white hover:bg-light-gray' : 'py-2 px-4 text-white bg-gray-600 rounded-full mx-3'}`}
+                        <div onClick={() => setPageNumber(p)}
+                            className={`leading-tight ${p !== pageNumber ? 'py-2 px-3 text-gray-500 bg-white hover:bg-light-gray' : 'py-2 px-4 text-white bg-gray-600 rounded-full mx-3'}`}
                         >
                             {p}
                         </div>
                     </li>
                 ))}
-                {activePage < arr.length && <li className="cursor-pointer">
-                    <div onClick={() => setActivePage(activePage + 1)}
+                {pageNumber < arr.length && <li className="cursor-pointer">
+                    <div onClick={() => setPageNumber(pageNumber + 1)}
                         className="block py-2 px-3 leading-tight text-gray-500 bg-white hover:bg-light-gray"
                     >
                         <span className="sr-only">Next</span>

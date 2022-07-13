@@ -1,69 +1,172 @@
-import { useEffect } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
-import { Link, NavLink } from 'react-router-dom'
-import { SiShopware } from 'react-icons/si'
-import { MdOutlineCancel } from 'react-icons/md'
-import { links } from '../utils/data'
-import { setIsOpenSidebar, handleAutoCloseSidebar, selectLayout } from '../redux/features/layout/layoutSlice'
+import { MdOutlineKeyboardArrowDown } from 'react-icons/md'
+import { useDispatch, useSelector } from 'react-redux'
+import { NavLink } from 'react-router-dom'
+import { setSystemCode } from '../redux/slices/applicationSettingsSlice'
+import { selectDashboard } from '../redux/slices/dashboardSlice'
+import { handleAutoCloseSidebar, selectLayout } from '../redux/slices/layoutSlice'
+import { SIDE_BAR_MENU } from '../utils/appSettings'
 
 const Sidebar = () => {
-    const { isOpenSidebar, screenSize, themeMode } = useSelector(selectLayout);
-    const dispatch = useDispatch();
+    const { isOpenSidebar } = useSelector(selectLayout);
+    const dataDashboard = useSelector(selectDashboard);
+    const dispatch = useDispatch()
+    const collapseToogle = (id) => {
+        const element = document.getElementById(id)
+        const classes = element.className
+        if (classes.includes('hidden')) {
+            element.classList.remove("hidden")
+        }
+        else {
+            element.classList.add("hidden")
+        }
+    }
+    const handleActiveSidebar = (pathName) => {
+        dispatch(handleAutoCloseSidebar())
+        if (pathName && pathName !== "/") {
+            const systemCode = pathName.substring(1).toUpperCase()
+            dispatch(setSystemCode({ systemCode }))
+        }
+    }
 
-    const activeLink = `flex items-center gap-4 p-4 rounded-lg text-base text-white m-2 ${themeMode === 'dark' ? 'bg-green-sea' : ''}`
-    const normalLink = 'flex items-center gap-4 p-4 rounded-lg text-base hover:bg-gray-200 m-2'
     return (
-        <div className={`flex flex-auto bg-white ${isOpenSidebar ? 'w-72' : 'w-24'}`}>
-            <div className='p-3 h-screen overflow-auto w-full'>
+        <aside className={`${isOpenSidebar ? 'w-72' : 'w-20'}`} aria-label="Sidebar">
+            <div className="overflow-y-auto py-4 px-3 bg-white rounded">
                 {isOpenSidebar ?
-                    <div className='mt-10'>
-                        {links.map(item => (
-                            <div key={item.title} >
-                                <p className='m-3 mt-4 uppercase'>
-                                    {item.title}
-                                </p>
-                                {item.links.map(link => (
+                    <ul className="space-y-2 items-center">
+                        {SIDE_BAR_MENU.map((data, index) => (
+                            !data.children.length
+                                ? <li
+                                    key={index}
+                                    title={data.name}
+                                    className="border-t pt-2"
+                                >
                                     <NavLink
-                                        key={link.name}
-                                        to={`/${link.to}`}
-                                        onClick={() => dispatch(handleAutoCloseSidebar())}
-                                        className={({ isActive }) => isActive ? activeLink : normalLink}
+                                        to={data.to}
+                                        onClick={handleActiveSidebar.bind(this, data.to)}
+                                        className={({ isActive }) => `flex items-center p-2 rounded-lg transition duration-75 group ${isActive ? 'bg-green-sea text-white' : 'hover:bg-gray-300'}`
+                                        }
                                     >
-                                        {link.icon}
-                                        <span className='capitalize text-sm'>{link.name}</span>
+                                        {data.icon}
+                                        <span className='ml-3'>{data.name}</span>
                                     </NavLink>
-                                ))}
-                            </div>
+                                </li>
+                                : <li
+                                    key={index}
+                                    title={data.name}
+                                    className="border-t pt-2"
+                                >
+                                    <button
+                                        type="button"
+                                        className={`flex items-center justify-between p-2 w-full rounded-lg transition duration-75 group hover:bg-gray-300`
+                                        }
+                                        onClick={collapseToogle.bind(this, `dropdown-${index}`)}
+                                    >
+                                        {data.icon}
+                                        <span className="flex-1 ml-3 text-left whitespace-nowrap">{data.name}</span>
+                                        <span className="inline-flex justify-center items-center p-1 text-xs font-medium text-white bg-secondary rounded-full">{
+                                            dataDashboard.ECM.reduce(
+                                                (previousValue, currentValue) => previousValue + currentValue,
+                                                0
+                                            )
+                                            + dataDashboard.BOS.reduce(
+                                                (previousValue, currentValue) => previousValue + currentValue,
+                                                0
+                                            )
+                                            + dataDashboard.LOS.reduce(
+                                                (previousValue, currentValue) => previousValue + currentValue,
+                                                0
+                                            )
+                                            + dataDashboard.BMS.reduce(
+                                                (previousValue, currentValue) => previousValue + currentValue,
+                                                0
+                                            )
+                                            + dataDashboard.TMS.reduce(
+                                                (previousValue, currentValue) => previousValue + currentValue,
+                                                0
+                                            )
+                                        }</span>
+                                        <MdOutlineKeyboardArrowDown />
+                                    </button>
+                                    <ul
+                                        id={`dropdown-${index}`}
+                                        className="py-2 space-y-2">
+                                        {data.children.map((dt, i) => (
+                                            <li
+                                                key={`${index}-${i}`}
+                                                title={dt.name}
+                                                className='pl-3'
+                                            >
+                                                <NavLink
+                                                    to={dt.to}
+                                                    onClick={handleActiveSidebar.bind(this, dt.to)}
+                                                    className={({ isActive }) => isActive ? `flex items-center justify-between p-2 w-full rounded-lg transition duration-75 group bg-green-sea text-white` : `flex items-center justify-between p-2 w-full rounded-lg transition duration-75 group hover:bg-gray-300`}
+                                                >
+                                                    {dt.icon}
+                                                    <span className='flex ml-3'>{dt.name}</span>
+                                                    <span className="inline-flex justify-center items-center p-1 text-xs font-medium text-white bg-secondary rounded-full">{
+                                                        dataDashboard[dt.to.substring(1).toUpperCase()].reduce(
+                                                            (previousValue, currentValue) => previousValue + currentValue,
+                                                            0
+                                                        )
+                                                    }</span>
+                                                </NavLink>
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </li>
                         ))}
-                    </div>
-                    :
-                    <div
-                        className='mt-10 opacity-50'
-                        // onMouseEnter={() => dispatch(setIsOpenSidebar(true))}
-                        // onMouseLeave={() => dispatch}
-                    >
-                        {links.map(item => (
-                            <div key={item.title} >
-                                <p className='m-3 mt-4 border-b border-gray-200'>
-                                    {/* {item.title} */}
-                                </p>
-                                {item.links.map(link => (
+                    </ul>
+                    : <ul className='space-y-2 flex flex-wrap items-center'>
+                        {SIDE_BAR_MENU.map((data, index) => (
+                            !data.children.length
+                                ? <li
+                                    key={index}
+                                    title={data.name}
+                                    className="border-t pt-2"
+                                >
                                     <NavLink
-                                        key={link.name}
-                                        to={`/${link.to}`}
-                                        onClick={() => dispatch(handleAutoCloseSidebar())}
-                                        className={({ isActive }) => isActive ? activeLink : normalLink}
+                                        to={data.to}
+                                        className={({ isActive }) => `flex items-center p-2 rounded-lg transition duration-75 group ${isActive ? 'bg-green-sea text-white' : ''}`
+                                        }
                                     >
-                                        {link.icon}
-                                        {/* <span className='capitalize'>{link.name}</span> */}
+                                        {data.icon}
                                     </NavLink>
-                                ))}
-                            </div>
+                                </li>
+                                : <li key={index}
+                                    className="border-t pt-2"
+                                    title={data.name}
+                                >
+                                    <button
+                                        className={`flex items-center justify-between p-2 rounded-lg transition duration-75 group `
+                                        }
+                                        onClick={collapseToogle.bind(this, `dropdown-${index}`)}
+                                    >
+                                        {data.icon}
+                                        <MdOutlineKeyboardArrowDown />
+                                    </button>
+                                    <ul
+                                        id={`dropdown-${index}`}
+                                        className="hidden space-y-2 flex-wrap items-center">
+                                        {data.children.map((dt, i) => (
+                                            <li key={`${index}-${i}`}
+                                                className='pl-3'
+                                                title={dt.name}
+                                            >
+                                                <NavLink
+                                                    to={dt.to}
+                                                    className={({ isActive }) => isActive ? `flex items-center p-2 w-full rounded-lg transition duration-75 group bg-green-sea text-white` : `flex items-center p-2 w-full rounded-lg transition duration-75 group `}
+                                                >
+                                                    {dt.icon}
+                                                </NavLink>
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </li>
                         ))}
-                    </div>
+                    </ul>
                 }
             </div>
-        </div>
+        </aside>
     )
 }
 

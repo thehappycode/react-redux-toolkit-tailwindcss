@@ -1,6 +1,3 @@
-import Jobs from "./jobs"
-import Systems from "./systems"
-export {
-    Jobs,
-    Systems
-}
+
+export {default as TableJobs} from './jobs/Jobs'
+export {default as TableSystems} from './systems/Systems'

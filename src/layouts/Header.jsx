@@ -5,16 +5,15 @@ import { FiShoppingCart } from 'react-icons/fi'
 import { BsChatLeft } from 'react-icons/bs'
 import { RiNotification3Line } from 'react-icons/ri'
 import { MdKeyboardArrowDown, MdOutlineCancel } from 'react-icons/md'
-// import { Cart, Chat, Notification, UserProfile } from '.'
-// import { useStateContext } from '../contexts/ContextProvider'
-import { setIsOpenSidebar, setScreenSize, handleAutoCloseSidebar, selectLayout } from '../redux/features/layout/layoutSlice'
+import { setIsOpenSidebar, setScreenSize, handleAutoCloseSidebar, selectLayout } from '../redux/slices/layoutSlice'
 import avatar from '../assets/images/avatar.jpeg'
-import Breadcrumb from '../components/Breadcrumb'
 import { Link } from 'react-router-dom'
 import { SiShopware } from 'react-icons/si'
+import { FULL_NAME } from '../utils/appSettings'
 
 const Header = () => {
   const { isOpenSidebar, screenSize, themeColor } = useSelector(selectLayout)
+  const fullName = FULL_NAME()
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -111,7 +110,7 @@ const Header = () => {
             color={themeColor}
             icon={<RiNotification3Line />}
           />
-          <div className='flex items-center gap-2 cursor-pointer p-1 hover:bg-light-gray rounded-lg'
+          <button className='flex items-center gap-2 cursor-pointer p-1 hover:bg-light-gray rounded-lg'
             onClick={() => { alert('user profile') }}
           >
             <img
@@ -121,10 +120,10 @@ const Header = () => {
             />
             <p>
               <span className='text-gray-400 text-14'>Hi, </span>{' '}
-              <span className='text-gray-400 font-bold ml-1 text-14'>Tâm</span>
+              <span className='text-gray-400 font-bold ml-1 text-14'>{fullName}</span>
             </p>
             <MdKeyboardArrowDown className='text-gray-400 text-14' />
-          </div>
+          </button>
           {/* {isClicked.chat && <Chat />}
         {isClicked.cart && <Cart />}
         {isClicked.notification && <Notification />}
