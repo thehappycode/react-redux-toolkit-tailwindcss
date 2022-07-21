@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { FaHome } from 'react-icons/fa'
 import { MdOutlineKeyboardArrowRight } from 'react-icons/md'
-import { Link, useLocation } from "react-router-dom"
+import { NavLink, useLocation } from "react-router-dom"
 import { SIDE_BAR_MENU } from "../utils/appSettings"
 
 const Breadcrumb = () => {
@@ -47,26 +47,26 @@ const Breadcrumb = () => {
         <nav className="flex" aria-label="Breadcrumb">
           <ol className="flex flex-wrap  items-center space-x-1 md:space-x-3">
             <li className="flex items-center">
-              <Link to="/" className="flex items-center font-semibold text-gray-700 hover:text-green-sea">
+              <NavLink to="/" className={({ isActive }) => `flex items-center italic hover:text-green-sea ${isActive ? 'font-semibold' : 'text-gray-500'}`}>
                 <span className="mr-2 w-4 h-4">
                   <FaHome />
                 </span>
                 Trang chủ
-              </Link>
+              </NavLink>
             </li>
             {breadcrumb.map((bc, index) => (
               <li key={index} >
                 <div className='flex items-center'>
-                  <MdOutlineKeyboardArrowRight />
+                  <MdOutlineKeyboardArrowRight style={{color: 'rgb(107 114 128)'}}/>
                   {bc.to
-                    ? <Link
-                      className='ml-1 font-semibold text-gray-700 hover:text-green-sea md:ml-2'
+                    ? <NavLink
+                      className={({ isActive }) => `italic ml-1 md:ml-2 hover:text-green-sea ${isActive ? 'font-semibold' : 'text-gray-500'}`}
                       to={bc.to}
                     >
                       {bc.name}
-                    </Link>
+                    </NavLink>
                     : <span
-                      className='ml-1 font-semibold text-gray-700 hover:text-green-sea md:ml-2'
+                      className={`italic ml-1 md:ml-2 text-gray-500`}
                     >
                       {bc.name}
                     </span>

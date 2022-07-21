@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import axios from 'axios';
 
 const useAxios = ({ baseURL, url, method, body = {}, headers = { accept: '*/*' } }) => {
+    debugger
     axios.defaults.baseURL = baseURL
     const [response, setResponse] = useState(null);
 

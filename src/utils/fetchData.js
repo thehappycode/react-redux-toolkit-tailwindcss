@@ -18,8 +18,9 @@ const fetchData = async ({ baseURL, url, method, body = {} }) => {
         if (status === 401) {
             localStorage.removeItem('userName')
             localStorage.removeItem('fullName')
+            localStorage.removeItem('email')
             localStorage.removeItem('acceptToken')
-
+            window.location.reload(); 
         }
         return { status, error: statusText, data }
     }

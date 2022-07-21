@@ -1,5 +1,5 @@
 import { FaChartPie } from 'react-icons/fa';
-import { GrTasks } from 'react-icons/gr';
+import { BsListTask } from 'react-icons/bs';
 
 export const rgba = (r, g, b, a) => {
   if (!a) {
@@ -26,10 +26,12 @@ export const BASE_URL = {
 
 export const USER_NAME = () => localStorage.getItem("userName")
 export const FULL_NAME = () => localStorage.getItem("fullName")
+export const EMAIL = () => localStorage.getItem("email")
+export const ACCEPT_TOKEN = () => localStorage.getItem("acceptToken")
 
 export const HEADER = () => ({
   'Content-Type': 'application/json',
-  'Authorization': 'Bearer ' + localStorage.getItem("acceptToken")
+  'Authorization': 'Bearer ' + ACCEPT_TOKEN()
 })
 
 export const SIDE_BAR_MENU = [
@@ -43,7 +45,7 @@ export const SIDE_BAR_MENU = [
   {
     name: 'Danh sách công việc',
     to: null,
-    icon: <GrTasks />,
+    icon: <BsListTask />,
     breadcrumb: [],
     children: [
       {
